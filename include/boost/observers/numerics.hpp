@@ -12,7 +12,7 @@
 #ifndef NUMERICS_H
 #define NUMERICS_H
 
-#include "subject.h"
+#include "subject.hpp"
 
 /*!
   @class Numeric< T >::DivByZero

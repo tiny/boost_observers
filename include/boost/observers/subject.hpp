@@ -13,8 +13,8 @@
 
 #include <stdint.h>
 #include <atomic>
-#include "boost/observers/observer.h"
-#include "boost/observers/lfmutex.h"
+#include "boost/observers/observer.hpp"
+#include "boost/observers/lfmutex.hpp"
 
 namespace boost { namespace observers {
 

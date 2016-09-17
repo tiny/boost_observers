@@ -11,7 +11,7 @@
 */
 #pragma once
 
-#include "subject.h"
+#include "subject.hpp"
 #include <map>
 
 namespace boost { namespace observers {
