@@ -11,19 +11,19 @@
 */
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 #include <atomic>
 
 #ifdef _WIN32
 #  include <windows.h>
-#  define  thread_self    GetCurrentThreadId
+#  define  get_thread_id     GetCurrentThreadId
 #elif defined(LINUX)
-#  define  thread_self    pthread_self
+#  define  get_thread_id     pthread_self
 #endif
 
-namespace boost { namespace observers {
+namespace boost { namespace observables {
 
-#define  hAtomic          std::atomic<uint32_t>
+typedef std::atomic<uint32_t>   hAtomic ;
 
 class LockFreeMutex
 {
@@ -43,9 +43,9 @@ class LockFreeMutex
                            _cnt  = 0 ;
                          }
 
-    void                 enter() 
+    void                 lock() 
                          {
-                           uint32_t  tid  = thread_self() ; 
+                           uint32_t  tid  = get_thread_id() ; 
                            uint32_t  zero = 0 ;
 
                            // lock-free mutex
@@ -57,7 +57,7 @@ class LockFreeMutex
                            }
                            _cnt++ ;
                          }
-    void                 leave() 
+    void                 unlock() 
                          {
                            _cnt-- ;
                            if (_cnt <= 0)
@@ -65,21 +65,5 @@ class LockFreeMutex
                          }
 } ; // class LockFreeMutex
 
-template <class T>
-class Scope
-{
-  private :
-    T        &m ;
-
-  public  :
-              Scope( T &m_ ) : m(m_) { m.enter() ; }
-             ~Scope() { m.leave() ; }
-} ; // class Scope
-
 }} ; // namespace
-
-uint32_t thread_pid() 
-{
-  return thread_self() ; 
-} 
 

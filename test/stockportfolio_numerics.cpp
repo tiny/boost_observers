@@ -14,7 +14,7 @@
 #include <boost/thread.hpp>
 #include <iostream>
 #include <set>
-#include "boost/observers/numerics.hpp"
+#include "boost/observables/numerics.hpp"
 #include <boost/timer/timer.hpp>
 
 #define  N_ITERS                  10
@@ -77,9 +77,9 @@ std::map<std::string, double> market = { { "MSFT",  57.67 },
 class Stock
 {
   public  :
-    uint32_t                              id ;
-    boost::observers::Numeric< double >   price ;
-    boost::observers::Numeric< uint32_t > volume ;
+    uint32_t                                id ;
+    boost::observables::Numeric< double >   price ;
+    boost::observables::Numeric< uint32_t > volume ;
 
                                           Stock( uint32_t id_, double spot = 0.0 ) 
                                           { id     = id_ ;
@@ -220,7 +220,7 @@ class PositionEntry
   public  :
     uint32_t                                stock_id ;
     EquityVec                               sheets ; // list of equity sales slips
-    boost::observers::Numeric< double >     value ;
+    boost::observables::Numeric< double >   value ;
     double                                  spot ; // last strike price
     uint32_t                                qoh ;
 
@@ -259,9 +259,9 @@ typedef std::map< uint32_t, PositionEntry* >::value_type    PositionEntryMap_pai
 class EquityLedger
 {
   public  :
-    uint32_t                             stock_id ;         // stock symbol
-    PositionEntryMap                     positions ;
-    boost::observers::Numeric< double >  value ;
+    uint32_t                               stock_id ;         // stock symbol
+    PositionEntryMap                       positions ;
+    boost::observables::Numeric< double >  value ;
 
     virtual void        on_value_change( const std::vector<boost::any> &args )
                         {
@@ -321,7 +321,7 @@ class Portfolio
   public  :
     uint32_t            customer_id ;
     EquityLedgerMap     ledgers ;
-    boost::observers::Numeric< double >  balance ;
+    boost::observables::Numeric< double >  balance ;
 
     virtual void        on_value_change( const std::vector<boost::any> &args )
                         {

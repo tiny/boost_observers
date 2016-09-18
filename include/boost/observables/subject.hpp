@@ -13,20 +13,21 @@
 
 #include <stdint.h>
 #include <atomic>
+#include <boost/thread/lock_guard.hpp>
 #include "boost/observers/observer.hpp"
-#include "boost/observers/lfmutex.hpp"
+#include "boost/observables/lfmutex.hpp"
 
-namespace boost { namespace observers {
+namespace boost { namespace observables {
 
 class Subject 
 {
     private  :
-      short              _block ;        // count of blocks - trigger when first hits 0
-      bool               _invoked ;      // true when blocked, then tripped by invoke
-      bool               _is_dead ;      // useful for globals that go out of scope(protection mechanism)
-      void              *_src ;          // who was the originator of the msgs
-      LockFreeMutex      _lock ;
-      ObserverVec        _vec ;
+      short                            _block ;        // count of blocks - trigger when first hits 0
+      bool                             _invoked ;      // true when blocked, then tripped by invoke
+      bool                             _is_dead ;      // useful for globals that go out of scope(protection mechanism)
+      void                            *_src ;          // who was the originator of the msgs
+      LockFreeMutex                    _lock ;
+      boost::observers::ObserverVec    _vec ;
 
     public   :
                          Subject ( void *src_ = nullptr ) 
@@ -53,20 +54,20 @@ class Subject
       void               block() { _block++ ; } // disables Observer
       void               clear() 
                          {
-                           Scope<LockFreeMutex>  sc( _lock ) ;
-                           ObserverVec_iter  it ;
+                           lock_guard<LockFreeMutex>  sc( _lock ) ;
+                           boost::observers::ObserverVec_iter  it ;
                            for (it = _vec.begin(); it != _vec.end(); it++)
                            {
                              delete( (*it) ) ;
                            }
                            _vec.clear() ;
                          }
-      Observer          *install ( Observer *c ) 
+      boost::observers::Observer          *install ( boost::observers::Observer *c ) 
                          {
                            if (c == nullptr)
                              return c ;
 
-                           Scope<LockFreeMutex>  sc( _lock ) ;
+                           lock_guard<LockFreeMutex>  sc( _lock ) ;
                            _vec.push_back( c ) ;
 
                            return c ;
@@ -79,10 +80,10 @@ class Subject
                               return ;
                             }
 
-                            Scope<LockFreeMutex>  sc( _lock ) ;
+                            lock_guard<LockFreeMutex>  sc( _lock ) ;
 
                             // locked... do some work
-                            ObserverVec_iter  it ;
+                            boost::observers::ObserverVec_iter  it ;
                             for (it = _vec.begin(); it != _vec.end(); it++)
                             {
                               if ((*it)->invoke() != 0)
@@ -97,10 +98,10 @@ class Subject
                               _invoked = true ;
                               return ;
                             }
-                            Scope<LockFreeMutex>  sc( _lock ) ;
+                            lock_guard<LockFreeMutex>  sc( _lock ) ;
 
                             // locked... do some work
-                            ObserverVec_iter  it ;
+                            boost::observers::ObserverVec_iter  it ;
                             for (it = _vec.begin(); it != _vec.end(); it++)
                             {
                               if ((*it)->invoke( args ) != 0)
@@ -108,15 +109,15 @@ class Subject
                             }
                             _invoked = false ;
                           }
-      Observer          *remove ( Observer *cb ) 
+      boost::observers::Observer          *remove ( boost::observers::Observer *cb ) 
                           {
                             if (cb == nullptr)
                               return cb ;
 
-                            Scope<LockFreeMutex>  sc( _lock ) ;
+                            lock_guard<LockFreeMutex>  sc( _lock ) ;
 
                             // locked... do some work
-                            ObserverVec_iter  it ;
+                            boost::observers::ObserverVec_iter  it ;
                             for (it = _vec.begin(); it != _vec.end(); it++)
                             {
                               if ((*it) == cb)
@@ -149,7 +150,7 @@ class Subject
                             return _block ;
                           }
 
-      Subject            &operator<< ( Observer *o ) { if (o) install( o ) ; return *this ; }
+      Subject            &operator<< ( boost::observers::Observer *o ) { if (o) install( o ) ; return *this ; }
 
       // access methods
       inline bool        enabled() const { return (_block == 0) ; }

@@ -14,7 +14,7 @@
 #include <boost/thread.hpp>
 #include <iostream>
 #include <set>
-#include "boost/observers/numerics.hpp"
+#include "boost/observables/numerics.hpp"
 #include <boost/timer/timer.hpp>
 
 using namespace boost ;
@@ -44,9 +44,9 @@ uint32_t fastrand_between( uint32_t a, uint32_t b)
 //   y = x + 3 
 //   z = y * 2 
 //
-boost::observers::Numeric< long >    x ;
-boost::observers::Numeric< long >    y ;
-boost::observers::Numeric< long >    z ;
+boost::observables::Numeric< long >    x ;
+boost::observables::Numeric< long >    y ;
+boost::observables::Numeric< long >    z ;
 
 void hook_business_rules()
 {
@@ -192,6 +192,7 @@ void test_numerics_performance()
 //-----------------------------------------------------------------------------
 //
 //
+
 int main()
 {
   hook_business_rules() ;

@@ -10,13 +10,13 @@
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 */
 #include <stdio.h>
-#include "boost/observers/eventmap.hpp"
+#include "boost/observables/eventmap.hpp"
 #include <boost/any.hpp>
-#include <vector>
+#include <vector> 
 
 using namespace boost ;
 
-typedef  boost::observers::EventMap< uint32_t >   Events ;
+typedef  boost::observables::EventMap< uint32_t >   Events ;
 
 enum FakeMsgId { FM_LBUTTONDN, FM_RBUTTONDN, FM_LBUTTONUP, FM_RBUTTONUP, FM_CREATE, FM_DESTROY, FM_MOUSEMOVE } ;
 
@@ -105,7 +105,7 @@ void test_fake_window_events()
 
 void test_string_events()
 {
-  boost::observers::EventMap< std::string >  evt ;
+  boost::observables::EventMap< std::string >  evt ;
   evt.get( "sam" ) << new observers::Lambda( [](const std::vector<boost::any> &args){ printf( "%s here.\n", boost::any_cast<std::string>( args[0] ).c_str() ) ; }) ;
   evt.get( "sue" ) << new observers::Lambda( [](const std::vector<boost::any> &args){ printf( "%s here.\n", boost::any_cast<std::string>( args[0] ).c_str() ) ; }) ;
   evt.get( "bob" ) << new observers::Lambda( [](const std::vector<boost::any> &args){ printf( "%s here.\n", boost::any_cast<std::string>( args[0] ).c_str() ) ; }) ;

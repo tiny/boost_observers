@@ -405,7 +405,7 @@ div.WordSection1
 	font-family:"Times New Roman","serif";}
 </style>
 <![endif]--><!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="3074"/>
+ <o:shapedefaults v:ext="edit" spidmax="5122"/>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
@@ -486,11 +486,12 @@ occurs, the originating object triggers the list of notifications held within
 the observable object, known as the Subject.&nbsp; The Subject may be observed
 by any objects that have access.&nbsp; The observer would simply install an
 instance of the Observer class into the Subject’s list of observers.&nbsp; This
-instance would contain the information needed to notify the observer as needed.<span
-style='mso-spacerun:yes'>  </span>This could be accomplished by triggering a
-member function specific to their class or a general C function, whatever the
-developer would like.&nbsp; The subject may also include a series of parameters
-specific to the event which could then be passed along to the observers.</span></p>
+instance would contain the information needed to notify the observer as
+needed.<span style='mso-spacerun:yes'>  </span>This could be accomplished by
+triggering a member function specific to their class or a general C function,
+whatever the developer would like.&nbsp; The subject may also include a series
+of parameters specific to the event which could then be passed along to the
+observers.</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><b><span style='font-size:14.0pt;
@@ -532,7 +533,7 @@ changes.</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>#include
-&lt;</span><span style='font-size:12.0pt;line-height:115%;font-family:"Tahoma","sans-serif"'>boost/observers/numerics.hpp</span><span
+&lt;</span><span style='font-size:12.0pt;line-height:115%;font-family:"Tahoma","sans-serif"'>boost/observables/numerics.hpp</span><span
 style='font-family:"Tahoma","sans-serif"'>&gt;</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
@@ -543,10 +544,10 @@ callback’</span>.&nbsp; Now define your objects:</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:12.0pt;
 margin-left:1.0in'><span style='font-size:12.0pt;line-height:115%;font-family:
-"Tahoma","sans-serif"'>boost::observers::Numeric&lt; long
-&gt;&nbsp;&nbsp;&nbsp; x ;<br>
-boost::observers::Numeric&lt; long &gt;&nbsp;&nbsp;&nbsp; y ;<br>
-boost::observers::Numeric&lt; long &gt;&nbsp;&nbsp;&nbsp; z ;</span></p>
+"Tahoma","sans-serif"'>boost:: observables :: Numeric&lt; long
+&gt;&nbsp;&nbsp;&nbsp; X ;<br>
+boost:: observables :: Numeric&lt; long &gt;&nbsp;&nbsp;&nbsp; Y ;<br>
+boost:: observables :: Numeric&lt; long &gt;&nbsp;&nbsp;&nbsp; Z ;</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>We
@@ -556,9 +557,9 @@ all we need is a few business rules.&nbsp; </span></p>
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:12.0pt;
 margin-left:1.0in'><span style='font-size:12.0pt;line-height:115%;font-family:
 "Tahoma","sans-serif"'>// rules<span class=GramE>:</span><br>
-//&nbsp;&nbsp; x = literal<br>
-//&nbsp;&nbsp; y = x + 3 <br>
-//&nbsp;&nbsp; z = y * 2 </span></p>
+//&nbsp;&nbsp; X = literal<br>
+//&nbsp;&nbsp; Y = X + 3 <br>
+//&nbsp;&nbsp; Z = Y * 2 </span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>Now
@@ -569,10 +570,10 @@ these rules?&nbsp; Like this:</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:12.0pt;
 margin-left:1.0in'><span style='font-size:12.0pt;line-height:115%;font-family:
-"Tahoma","sans-serif"'>x &lt;&lt; new observers::<span class=SpellE>LambdaPoke</span>(
-[](){ y = x + 3 ; } ) ;<br>
-y &lt;&lt; new observers::<span class=SpellE>LambdaPoke</span>( [](){ z = y * 2
-; } ) ;</span></p>
+"Tahoma","sans-serif"'>X &lt;&lt; new boost::observers::<span class=SpellE>LambdaPoke</span>(
+[](){ Y = X + 3 ; } ) ;<br>
+Y &lt;&lt; new boost::observers::<span class=SpellE>LambdaPoke</span>( [](){ Z
+= Y * 2 ; } ) ;</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>This
@@ -591,7 +592,7 @@ events.&nbsp; </span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-size:12.0pt;line-height:
-115%;font-family:"Tahoma","sans-serif"'>x = <span class=GramE>5 ;</span></span></p>
+115%;font-family:"Tahoma","sans-serif"'>X = 5 ;</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>This

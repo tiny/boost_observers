@@ -11,10 +11,10 @@
 */
 #pragma once
 
-#include "subject.hpp"
+#include "boost/observables/subject.hpp"
 #include <map>
 
-namespace boost { namespace observers {
+namespace boost { namespace observables {
 
 template <class T>
 class EventMap
@@ -30,13 +30,13 @@ class EventMap
     Subject                  &default() { return _default ; }
     Subject                  *find( const T &evt_id ) 
                               {
-                                Scope<LockFreeMutex>  sc( _lock ) ;
+                                lock_guard<LockFreeMutex>  sc( _lock ) ;
                                 std::map< T, Subject >::iterator  it = _events.find( evt_id ) ;
                                 return (it == _events.end()) ? nullptr : &(*it).second ;
                               }
     Subject                  &get( const T &evt_id ) 
                               {
-                                Scope<LockFreeMutex>  sc( _lock ) ;
+                                lock_guard<LockFreeMutex>  sc( _lock ) ;
                                 std::map< T, Subject >::iterator  it = _events.find( evt_id ) ;
                                 if (it == _events.end())
                                 {
@@ -47,14 +47,14 @@ class EventMap
                               }
     void                      invoke( const T &evt_id ) 
                               {
-                                Scope<LockFreeMutex>  sc( _lock ) ;
+                                lock_guard<LockFreeMutex>  sc( _lock ) ;
                                 Subject *s = find( evt_id ) ;
                                 if (s)  s->invoke({evt_id}) ;
                                 else _default.invoke({evt_id}) ;
                               }
     void                      invoke( const T &evt_id, const std::vector<boost::any> &args_ ) 
                               {
-                                Scope<LockFreeMutex>  sc( _lock ) ;
+                                lock_guard<LockFreeMutex>  sc( _lock ) ;
                                 Subject *s = find( evt_id ) ;
 
                                 std::vector<boost::any> args = {evt_id} ;
