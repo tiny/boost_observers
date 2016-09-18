@@ -1,0 +1,256 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:0in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+.MsoPapDefault
+	{margin-bottom:10.0pt;
+	line-height:115%;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US>
+
+<div class=WordSection1>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><b><span style='font-size:14.0pt;
+line-height:115%;font-family:"Tahoma","sans-serif"'>boost :: observers</span></b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>boost
+:: observers is a Boost sub library designed to implement the observer pattern
+as well as a series of observable components.  </span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>In
+general, any object could observe any other object and register to receive notification
+when the event occurs.  In order for any object to receive notification, boost
+:: observers utilizes a loose coupling pattern to pass the notification between
+the objects. </span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>This
+simple relationship is the key component behind MVC, or the Model, View,
+Control architecture, and enables the implementation of fairly complex systems with
+ease.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><b><span style='font-size:14.0pt;
+line-height:115%;font-family:"Tahoma","sans-serif"'>Model, View, Control</span></b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>MVC
+was originally described in the early 1970s but it wasn’t until the late 1980s
+that it came into general use.  Many variants have sprouted since then, but all
+stem from the core concept of event driven, loosely-coupled, modular design.  In
+essence, every program can be broken down into a handful of general categories
+of responsibility.  The data model, which may include various business rules,
+the User Interface (UI) or View, and the Control section which may be driven by
+the user, network events or timed triggers.  In general, the data model is ignorant
+of all other sections and is therefore the most portable.  The associated
+business rules would be similarly portable, but would be aware of the data
+model and must react according to its own rules to maintain the integrity of data
+model according to those rules.  The UI would know of the data model, but not
+the rules.  This keeps the UI developer honest while insuring the rules are not
+interfered with.  Once the UI is notified of data model changes, it would
+update its components quickly thereby insuring the on-screen view of the data
+to be accurate, maintaining UI integrity.  A network section could also be
+added to notify a remote connection of various changes in the data model.  Similarly,
+the network model may receive data model updates that it would push to the data
+model, triggering changes in the business rules and the UI.  User controls
+could also be used to change the various components of the data model,
+triggering whatever objects need be notified.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>Central
+to this design is the mechanism through which the various components are
+notified or triggered.  This is the observer pattern.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><b><span style='font-size:14.0pt;
+line-height:115%;font-family:"Tahoma","sans-serif"'>The observer pattern</span></b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>The
+observer pattern connects an event, or subject, to an action by implementing a
+series of classes based off the base class Observer.  When an event occurs, the
+originating object triggers the list of notifications held within the
+observable object, known as the Subject.  The Subject may be observed by any
+objects that have access.  The observer would simply install an instance of the
+Observer class into the Subject’s list of observers.  This instance would
+contain the information needed to notify the observer exactly as they see fit,
+by triggering a member function specific to their class or a general C
+function, whatever the developer would like.  The subject may also include a
+series of parameters specific to the event which could then be passed along to
+the observers.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><b><span style='font-size:14.0pt;
+line-height:115%;font-family:"Tahoma","sans-serif"'>Why do this?</span></b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>The
+main reason to follow this design structure is integrity; Integrity for your
+data model; Integrity for your user interface; and integrity for your network
+objects in general.  If implemented properly, all data whenever accessed within
+the system can be assured of its accuracy in the context of the business rules.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>Is
+the really a concern?  Most definitely.  I’ve seen cases where developers in a
+large scale system were updating a variable in 26 different locations throughout
+the code.  At one point, there was a bug where one of those locations had
+forgotten to call all the subsequent updates after updating the variable.  The result
+was a nasty 2 week bug hunt.  </span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>I’ve
+also seen prominent commercial systems sitting side by side one another,
+connected to the same server over the same network and the data displayed was
+consistently inaccurate.  Not by milliseconds which would be network latency, it
+was just never updated properly.  This seriously undermines the users trust.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><b><span style='font-size:14.0pt;
+line-height:115%;font-family:"Tahoma","sans-serif"'>How do I use it?</span></b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>First
+you must start with a piece of data that can be observed.  The simplest observable
+data would be a long and the subject to observe is whether or not it changes.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>#include
+&lt;</span><span style='font-size:12.0pt;line-height:115%;font-family:"Tahoma","sans-serif"'>boost/observers/numerics.hpp</span><span
+style='font-family:"Tahoma","sans-serif"'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>This
+will bring in the Numeric template which has an instance of the Subject class
+called ‘valueCB’ or ‘value change callback’.  Now define your objects:</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-size:12.0pt;line-height:
+115%;font-family:"Tahoma","sans-serif"'>boost::observers::Numeric&lt; long
+&gt;    x ;<br>
+boost::observers::Numeric&lt; long &gt;    y ;<br>
+boost::observers::Numeric&lt; long &gt;    z ;<br>
+<br>
+</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>We
+now have three(3) observables x, y, and z.  Now all we need is a few business
+rules.  </span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-size:12.0pt;line-height:
+115%;font-family:"Tahoma","sans-serif"'>// rules:<br>
+//   x = literal<br>
+//   y = x + 3 <br>
+//   z = y * 2 <br>
+<br>
+</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>Now
+these are just comments, but they convey what we’re doing.  X is a literal and
+therefore the only field we should change directly.  Y and Z are both computed
+and dependent on X and Y, respectively.  So how do we implement these rules?  Like
+this:</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-size:12.0pt;line-height:
+115%;font-family:"Tahoma","sans-serif"'>x &lt;&lt; new observers::LambdaPoke(
+[](){ y = x + (long) 3 ; } ) ;<br>
+y &lt;&lt; new observers::LambdaPoke( [](){ z = y * (long) 2 ; } ) ;<br>
+<br>
+</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>This
+will create two instances of the Observer template, LambdaPoke defined in
+observer.hpp, and ‘push’ it onto the subject to be triggered.  The push
+operator, &lt;&lt;, is a convenience I added to Numeric that makes it easier to
+observe single subject objects.  Each LambdaPoke instance takes a c++ lambda
+function as a parameter to its constructor.  In this case, each lambda refers
+to the global instances of X, Y, and Z.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>Now
+that the rules are hooked up, all that’s needed is to kick off the chain of
+events.  </span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-size:12.0pt;line-height:
+115%;font-family:"Tahoma","sans-serif"'>x = 5 ;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>This
+is all that’s needed.  Upon executing this line, if the values of X, Y, and Z
+were printed, they would be accurate in reference to the rules.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><b><span style='font-size:14.0pt;
+line-height:115%;font-family:"Tahoma","sans-serif"'>Where to from here?</span></b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>Expanding
+on the concept, you can easily build larger data models with intricate
+inter-dependencies.  From there, add a UI layer to display the information to
+the user and/or allow them to update the values.  I have included a more
+involved example in the test folder which demonstrates a fairly complex data
+set by implementing a stock ticker feed and stock portfolios (look for stockportfolio_numerics.cpp)</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>If
+you’d like more information, I’m usually available these days either supporting
+the wow public vent (wow.publicvent.org : 4135  nick:  tiny) or on skype
+(tiny33762).</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
+margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>
