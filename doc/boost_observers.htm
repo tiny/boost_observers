@@ -14,6 +14,8 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <link rel=colorSchemeMapping href="boost_observers_files/colorschememapping.xml">
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
   <w:TrackMoves>false</w:TrackMoves>
   <w:TrackFormatting/>
   <w:ValidateAgainstSchemas/>
@@ -362,16 +364,18 @@ p.msopapdefault, li.msopapdefault, div.msopapdefault
 	font-family:"Times New Roman","serif";
 	mso-fareast-font-family:"Times New Roman";
 	mso-fareast-theme-font:minor-fareast;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
 .MsoChpDefault
 	{mso-style-type:export-only;
 	mso-default-props:yes;
 	font-size:10.0pt;
 	mso-ansi-font-size:10.0pt;
 	mso-bidi-font-size:10.0pt;}
-.MsoPapDefault
-	{mso-style-type:export-only;
-	margin-bottom:10.0pt;
-	line-height:115%;}
 @page WordSection1
 	{size:8.5in 11.0in;
 	margin:1.0in 1.0in 1.0in 1.0in;
@@ -394,17 +398,14 @@ div.WordSection1
 	mso-style-qformat:yes;
 	mso-style-parent:"";
 	mso-padding-alt:0in 5.4pt 0in 5.4pt;
-	mso-para-margin-top:0in;
-	mso-para-margin-right:0in;
-	mso-para-margin-bottom:10.0pt;
-	mso-para-margin-left:0in;
-	line-height:115%;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
 	mso-pagination:widow-orphan;
 	font-size:10.0pt;
 	font-family:"Times New Roman","serif";}
 </style>
 <![endif]--><!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="2050"/>
+ <o:shapedefaults v:ext="edit" spidmax="3074"/>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
@@ -416,26 +417,29 @@ div.WordSection1
 <div class=WordSection1>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
-margin-left:1.0in;text-align:justify'><b><span style='font-size:14.0pt;
-line-height:115%;font-family:"Tahoma","sans-serif"'>boost :: observers</span></b></p>
+margin-left:1.0in;text-align:justify'><span class=GramE><b><span
+style='font-size:14.0pt;line-height:115%;font-family:"Tahoma","sans-serif"'>boost
+:</span></b></span><b><span style='font-size:14.0pt;line-height:115%;
+font-family:"Tahoma","sans-serif"'>: observers</span></b></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
-margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>boost
-:: observers is a Boost sub library designed to implement the observer pattern
-as well as a series of observable components.&nbsp; </span></p>
+margin-left:1.0in;text-align:justify'><span class=GramE><span style='font-family:
+"Tahoma","sans-serif"'>boost :</span></span><span style='font-family:"Tahoma","sans-serif"'>:
+observers is a Boost sub library designed to implement the observer pattern as
+well as a series of observable components.&nbsp; </span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>In
-general, any object could observe an event on any other object and register to
-receive notification when the event occurs.&nbsp; In order for any object to
-receive notification, boost :: observers utilizes a loose coupling pattern to
-pass the notification between the objects. </span></p>
+general, any object could observe an event on any other object and register to receive
+notification when the event occurs.&nbsp; In order for any object to receive
+notification, <span class=GramE>boost :</span>: observers utilizes a loose
+coupling pattern to pass the notification between the objects. </span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>This
-simple relationship is the key component behind MVC, or the Model, View, Control
-architecture, and enables the implementation of fairly complex systems with
-ease.</span></p>
+simple relationship is the key component behind MVC, or the Model, View,
+Control architecture, and enables the implementation of fairly complex systems
+with ease.</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><b><span style='font-size:14.0pt;
@@ -453,17 +457,17 @@ section which may be driven by the user, network events or timed
 triggers.&nbsp; In general, the data model is ignorant of all other sections
 and is therefore the most portable.&nbsp; The associated business rules would
 be similarly portable, but would be aware of the data model and must react
-according to its own rules to maintain the integrity of data model according to
-those rules.&nbsp; The UI would know of the data model, but not the
-rules.&nbsp; This keeps the UI developer honest while insuring the rules are
-not interfered with.&nbsp; Once the UI is notified of data model changes, it
-would update its components quickly thereby insuring the on-screen view of the
-data to be accurate, maintaining UI integrity.&nbsp; A network section could also
-be added to notify a remote connection of various changes in the data
-model.&nbsp; Similarly, the network model may receive data model updates that
-it would push to the data model, triggering changes in the business rules and
-the UI.&nbsp; User controls could also be used to change the various components
-of the data model, triggering whatever objects need be notified.</span></p>
+according to its own rules to maintain the integrity of the data model
+according to those rules.&nbsp; The UI would know of the data model, but not
+the rules.&nbsp; This keeps the UI developer honest while insuring the rules
+are not interfered with.&nbsp; Once the UI is notified of data model changes,
+it would update its components quickly thereby insuring the on-screen view of
+the data to be accurate, maintaining UI integrity.&nbsp; A network section
+could also be added to notify a remote connection of various changes in the
+data model.&nbsp; Similarly, the network model may receive data model updates
+that it would push to the data model, triggering changes in the business rules
+and the UI.&nbsp; User controls could also be used to change the various
+components of the data model, triggering whatever objects need be notified.</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>Central
@@ -482,11 +486,11 @@ occurs, the originating object triggers the list of notifications held within
 the observable object, known as the Subject.&nbsp; The Subject may be observed
 by any objects that have access.&nbsp; The observer would simply install an
 instance of the Observer class into the Subject’s list of observers.&nbsp; This
-instance would contain the information needed to notify the observer exactly as
-they see fit, by triggering a member function specific to their class or a
-general C function, whatever the developer would like.&nbsp; The subject may
-also include a series of parameters specific to the event which could then be
-passed along to the observers.</span></p>
+instance would contain the information needed to notify the observer as needed.<span
+style='mso-spacerun:yes'>  </span>This could be accomplished by triggering a
+member function specific to their class or a general C function, whatever the
+developer would like.&nbsp; The subject may also include a series of parameters
+specific to the event which could then be passed along to the observers.</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><b><span style='font-size:14.0pt;
@@ -502,19 +506,19 @@ rules.</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>Is
-the really a concern?&nbsp; Most definitely.&nbsp; I’ve seen cases where
-developers in a large scale system were updating a variable in 26 different
-locations throughout the code.&nbsp; At one point, there was a bug where one of
-those locations had forgotten to call all the subsequent updates after updating
-the variable.&nbsp; The result was a nasty 2 week bug hunt.&nbsp; </span></p>
+the really a concern?&nbsp; <span class=GramE>Most definitely.</span>&nbsp;
+I’ve seen cases where developers in a large scale system were updating a
+variable in 26 different locations throughout the code.&nbsp; At one point,
+there was a bug where one of those locations had forgotten to call all the
+subsequent updates after updating the variable.&nbsp; The result was a nasty 2
+week bug hunt.&nbsp; </span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>I’ve
-also seen prominent commercial systems sitting side by side one another,
-connected to the same server over the same network and the data displayed was
-consistently inaccurate.&nbsp; Not by milliseconds which would be network
-latency, it was just never updated properly.&nbsp; This seriously undermines
-the users trust.</span></p>
+also seen prominent commercial systems sitting side by side, connected to the
+same server over the same network and the data displayed was consistently
+inaccurate.&nbsp; Not by milliseconds which would be network latency, it was
+just never updated properly.&nbsp; This seriously undermines the users trust.</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><b><span style='font-size:14.0pt;
@@ -533,24 +537,25 @@ style='font-family:"Tahoma","sans-serif"'>&gt;</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>This
-will bring in the Numeric template which has an instance of the Subject class
-called ‘valueCB’ or ‘value change callback’.&nbsp; Now define your objects:</span></p>
+will bring in the Numeric template which <span class=GramE>has an instance of
+the Subject class called ‘<span class=SpellE>valueCB</span>’ or ‘value change
+callback’</span>.&nbsp; Now define your objects:</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:12.0pt;
-margin-left:1.0in;text-align:justify'><span style='font-size:12.0pt;line-height:
-115%;font-family:"Tahoma","sans-serif"'>boost::observers::Numeric&lt; long
+margin-left:1.0in'><span style='font-size:12.0pt;line-height:115%;font-family:
+"Tahoma","sans-serif"'>boost::observers::Numeric&lt; long
 &gt;&nbsp;&nbsp;&nbsp; x ;<br>
 boost::observers::Numeric&lt; long &gt;&nbsp;&nbsp;&nbsp; y ;<br>
 boost::observers::Numeric&lt; long &gt;&nbsp;&nbsp;&nbsp; z ;</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>We
-now have three(3) observables x, y, and z.&nbsp; Now all we need is a few
-business rules.&nbsp; </span></p>
+now have <span class=GramE>three(</span>3) observables X, Y, and Z.&nbsp; Now
+all we need is a few business rules.&nbsp; </span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:12.0pt;
-margin-left:1.0in;text-align:justify'><span style='font-size:12.0pt;line-height:
-115%;font-family:"Tahoma","sans-serif"'>// rules:<br>
+margin-left:1.0in'><span style='font-size:12.0pt;line-height:115%;font-family:
+"Tahoma","sans-serif"'>// rules<span class=GramE>:</span><br>
 //&nbsp;&nbsp; x = literal<br>
 //&nbsp;&nbsp; y = x + 3 <br>
 //&nbsp;&nbsp; z = y * 2 </span></p>
@@ -563,33 +568,35 @@ computed and dependent on X and Y, respectively.&nbsp; So how do we implement
 these rules?&nbsp; Like this:</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:12.0pt;
-margin-left:1.0in;text-align:justify'><span style='font-size:12.0pt;line-height:
-115%;font-family:"Tahoma","sans-serif"'>x &lt;&lt; new observers::LambdaPoke(
-[](){ y = x + (long) 3 ; } ) ;<br>
-y &lt;&lt; new observers::LambdaPoke( [](){ z = y * (long) 2 ; } ) ;</span></p>
+margin-left:1.0in'><span style='font-size:12.0pt;line-height:115%;font-family:
+"Tahoma","sans-serif"'>x &lt;&lt; new observers::<span class=SpellE>LambdaPoke</span>(
+[](){ y = x + 3 ; } ) ;<br>
+y &lt;&lt; new observers::<span class=SpellE>LambdaPoke</span>( [](){ z = y * 2
+; } ) ;</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>This
-will create two instances of the Observer template, LambdaPoke defined in
-observer.hpp, and ‘push’ it onto the subject to be triggered.&nbsp; The push
-operator, &lt;&lt;, is a convenience I added to Numeric that makes it easier to
-observe single subject objects.&nbsp; Each LambdaPoke instance takes a c++
+will create two instances of the Observer template, <span class=SpellE>LambdaPoke</span>
+(defined in observer.hpp), and ‘push’ it onto the subject to be
+triggered.&nbsp; The push operator, &lt;&lt;, is a convenience I added to
+Numeric that makes it easier to observe single subject objects.&nbsp; Each <span
+class=SpellE>LambdaPoke</span> instance takes a <span class=SpellE>c++</span>
 lambda function as a parameter to its constructor.&nbsp; In this case, each
 lambda refers to the global instances of X, Y, and Z.</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>Now
-that the rules are hooked up, all that’s needed is to kick off the chain of events.&nbsp;
-</span></p>
+that the rules are hooked up, all that’s needed is to kick off the chain of
+events.&nbsp; </span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-size:12.0pt;line-height:
-115%;font-family:"Tahoma","sans-serif"'>x = 5 ;</span></p>
+115%;font-family:"Tahoma","sans-serif"'>x = <span class=GramE>5 ;</span></span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>This
 is all that’s needed.&nbsp; Upon executing this line, if the values of X, Y,
-and Z were printed, they would be accurate in reference to the rules.</span></p>
+and Z were printed they would be accurate in relation to the rules.</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><b><span style='font-size:14.0pt;
@@ -607,8 +614,8 @@ stockportfolio_numerics.cpp)</span></p>
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>If
 you’d like more information, I’m usually available these days either supporting
-the wow public vent (wow.publicvent.org : 4135&nbsp; nick:&nbsp; tiny) or on
-skype (tiny33762).</span></p>
+the wow public vent (<span class=GramE>wow.publicvent.org :</span> 4135&nbsp;
+nick:&nbsp; tiny) or on <span class=SpellE>skype</span> (tiny33762).</span></p>
 
 <p class=MsoNormal style='margin-top:0in;margin-right:1.0in;margin-bottom:10.0pt;
 margin-left:1.0in;text-align:justify'><span style='font-family:"Tahoma","sans-serif"'>&nbsp;</span></p>
