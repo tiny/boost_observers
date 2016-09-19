@@ -106,10 +106,10 @@ void test_fake_window_events()
 void test_string_events()
 {
   boost::observables::EventMap< std::string >  evt ;
-  evt.get( "sam" ) << new observers::Lambda( [](const std::vector<boost::any> &args){ printf( "%s here.\n", boost::any_cast<std::string>( args[0] ).c_str() ) ; }) ;
-  evt.get( "sue" ) << new observers::Lambda( [](const std::vector<boost::any> &args){ printf( "%s here.\n", boost::any_cast<std::string>( args[0] ).c_str() ) ; }) ;
-  evt.get( "bob" ) << new observers::Lambda( [](const std::vector<boost::any> &args){ printf( "%s here.\n", boost::any_cast<std::string>( args[0] ).c_str() ) ; }) ;
-  evt.default()    << new observers::Lambda( [](const std::vector<boost::any> &args){ printf( "%s not here.\n", boost::any_cast<std::string>( args[0] ).c_str() ) ; }) ;
+  evt.get( "sam" )  << new observers::Lambda( [](const std::vector<boost::any> &args){ printf( "%s here.\n", boost::any_cast<std::string>( args[0] ).c_str() ) ; }) ;
+  evt.get( "sue" )  << new observers::Lambda( [](const std::vector<boost::any> &args){ printf( "%s here.\n", boost::any_cast<std::string>( args[0] ).c_str() ) ; }) ;
+  evt.get( "bob" )  << new observers::Lambda( [](const std::vector<boost::any> &args){ printf( "%s here.\n", boost::any_cast<std::string>( args[0] ).c_str() ) ; }) ;
+  evt.get_default() << new observers::Lambda( [](const std::vector<boost::any> &args){ printf( "%s not here.\n", boost::any_cast<std::string>( args[0] ).c_str() ) ; }) ;
 
   evt.invoke( "sam" ) ;
   evt.invoke( "abe" ) ;

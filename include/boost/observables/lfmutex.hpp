@@ -13,11 +13,13 @@
 
 #include <cstdint>
 #include <atomic>
+#include <boost/predef.h>
 
-#ifdef _WIN32
+#if BOOST_OS_WINDOWS
 #  include <windows.h>
 #  define  get_thread_id     GetCurrentThreadId
-#elif defined(LINUX)
+#elif BOOST_OS_LINUX
+#  include <pthread.h>
 #  define  get_thread_id     pthread_self
 #endif
 
@@ -61,7 +63,11 @@ class LockFreeMutex
                          {
                            _cnt-- ;
                            if (_cnt <= 0)
+#if BOOST_OS_LINUX
+                             _lock.store( 0 ) ;
+#else
                              std::atomic_store( &_lock, 0 ) ;
+#endif
                          }
 } ; // class LockFreeMutex
 

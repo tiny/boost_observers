@@ -20,27 +20,31 @@ template <class T>
 class EventMap
 {
   private :
+    typedef typename std::map< T, Subject >              _EventMap ;
+    typedef typename std::map< T, Subject >::iterator    _EventMap_iter ;
+    typedef typename std::map< T, Subject >::value_type  _EventMap_pair ;
+
     LockFreeMutex             _lock ;
-    std::map< T, Subject >    _events ;
+    _EventMap                 _events ;
     Subject                   _default ;
 
   public  :
                               EventMap() {}
 
-    Subject                  &default() { return _default ; }
+    Subject                  &get_default() { return _default ; }
     Subject                  *find( const T &evt_id ) 
                               {
                                 lock_guard<LockFreeMutex>  sc( _lock ) ;
-                                std::map< T, Subject >::iterator  it = _events.find( evt_id ) ;
+                                _EventMap_iter  it = _events.find( evt_id ) ;
                                 return (it == _events.end()) ? nullptr : &(*it).second ;
                               }
     Subject                  &get( const T &evt_id ) 
                               {
                                 lock_guard<LockFreeMutex>  sc( _lock ) ;
-                                std::map< T, Subject >::iterator  it = _events.find( evt_id ) ;
+                                _EventMap_iter  it = _events.find( evt_id ) ;
                                 if (it == _events.end())
                                 {
-                                  _events.insert( std::map< T, Subject >::value_type( evt_id, Subject() )) ;
+                                  _events.insert( _EventMap_pair( evt_id, Subject() )) ;
                                   it = _events.find( evt_id ) ;
                                 }
                                 return (*it).second ;
