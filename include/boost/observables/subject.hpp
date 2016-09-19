@@ -1,5 +1,5 @@
 /*!
-  @file       subject.h
+  @file       subject.hpp
   @brief      Subject class definition
 
   @author     Robert McInnis

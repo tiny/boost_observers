@@ -1,5 +1,5 @@
 /*!
-  @file       numerics.h
+  @file       numerics.hpp
   @brief      numerics template definition
 
   @author     Robert McInnis

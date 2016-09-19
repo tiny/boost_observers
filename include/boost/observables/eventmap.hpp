@@ -1,5 +1,5 @@
 /*!
-  @file       eventmap.h
+  @file       eventmap.hpp
   @brief      EventMap class definition
 
   @author     Robert McInnis

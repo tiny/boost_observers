@@ -1,5 +1,5 @@
 /*!
-  @file       lfmutex.h
+  @file       lfmutex.hpp
   @brief      LockFreeMutex class definition
 
   @author     Robert McInnis
