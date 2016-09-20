@@ -482,7 +482,7 @@ void test_portfolio( StockFeed &feed, PortfolioMgr &mgr )
   printf( "max ticks/sec   %8.0lf \n", floor( ((double)MAX_TICKS / (double)msec)*1000.0 )) ;
 
   printf( "\n" ) ;
-  printf( "portfolio for customer-id 1 after updates\n" ) ;
+  printf( "portfolio for customer-1 after updates\n" ) ;
   mgr.get( 1 ).report() ;
 
 } // :: test_portfolio
