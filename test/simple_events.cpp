@@ -34,15 +34,15 @@ class FakeWindow
                      evts.get( FM_MOUSEMOVE ) << new observers::MemberFunc< FakeWindow> ( this, &FakeWindow :: on_mouse_move ) ;
                    }
     virtual void   on_lbutton_dn( const std::vector<boost::any> &args ) 
-                   { printf( "on_lbutton_dn   wp: %0x04lx   lp: %0x04lx \n", boost::any_cast<uint32_t>( args[1] ), boost::any_cast<uint32_t>( args[2] ) ) ; }
+                   { printf( "on_lbutton_dn   wp: 0x%04lx   lp: 0x%04lx \n", boost::any_cast<uint32_t>( args[1] ), boost::any_cast<uint32_t>( args[2] ) ) ; }
     virtual void   on_lbutton_up( const std::vector<boost::any> &args ) 
-                   { printf( "on_lbutton_up   wp: %0x04lx   lp: %0x04lx \n", boost::any_cast<uint32_t>( args[1] ), boost::any_cast<uint32_t>( args[2] ) ) ; }
+                   { printf( "on_lbutton_up   wp: 0x%04lx   lp: 0x%04lx \n", boost::any_cast<uint32_t>( args[1] ), boost::any_cast<uint32_t>( args[2] ) ) ; }
     virtual void   on_rbutton_dn( const std::vector<boost::any> &args ) 
-                   { printf( "on_rbutton_dn   wp: %0x04lx   lp: %0x04lx \n", boost::any_cast<uint32_t>( args[1] ), boost::any_cast<uint32_t>( args[2] ) ) ; }
+                   { printf( "on_rbutton_dn   wp: 0x%04lx   lp: 0x%04lx \n", boost::any_cast<uint32_t>( args[1] ), boost::any_cast<uint32_t>( args[2] ) ) ; }
     virtual void   on_rbutton_up( const std::vector<boost::any> &args ) 
-                   { printf( "on_rbutton_up   wp: %0x04lx   lp: %0x04lx \n", boost::any_cast<uint32_t>( args[1] ), boost::any_cast<uint32_t>( args[2] ) ) ; }
+                   { printf( "on_rbutton_up   wp: 0x%04lx   lp: 0x%04lx \n", boost::any_cast<uint32_t>( args[1] ), boost::any_cast<uint32_t>( args[2] ) ) ; }
     virtual void   on_mouse_move( const std::vector<boost::any> &args ) 
-                   { printf( "on_mouse_move   wp: %0x04lx   lp: %0x04lx \n", boost::any_cast<uint32_t>( args[1] ), boost::any_cast<uint32_t>( args[2] ) ) ; }
+                   { printf( "on_mouse_move   wp: 0x%04lx   lp: 0x%04lx \n", boost::any_cast<uint32_t>( args[1] ), boost::any_cast<uint32_t>( args[2] ) ) ; }
 
   public    :
     uint32_t       hwnd ;
@@ -87,6 +87,12 @@ void test_fake_window_events()
   FakeWindow  w2( 2 ) ;
   FakeWindow  w3( 3 ) ;
 
+  printf( "--[  fake windows event test  ]--\n" ) ;
+
+  w1.create() ;
+  w2.create() ;
+  w3.create() ;
+
   wnds.insert( WindowMap_pair( w1.hwnd, &w1 )) ;
   wnds.insert( WindowMap_pair( w2.hwnd, &w2 )) ;
   wnds.insert( WindowMap_pair( w3.hwnd, &w3 )) ;
@@ -105,6 +111,8 @@ void test_fake_window_events()
 
 void test_string_events()
 {
+  printf( "--[  simple string event test  ]--\n" ) ;
+
   boost::observables::EventMap< std::string >  evt ;
   evt.get( "sam" )  << new observers::Lambda( [](const std::vector<boost::any> &args){ printf( "%s here.\n", boost::any_cast<std::string>( args[0] ).c_str() ) ; }) ;
   evt.get( "sue" )  << new observers::Lambda( [](const std::vector<boost::any> &args){ printf( "%s here.\n", boost::any_cast<std::string>( args[0] ).c_str() ) ; }) ;
@@ -116,6 +124,8 @@ void test_string_events()
   evt.invoke( "bob" ) ;
   evt.invoke( "sue" ) ;
   evt.invoke( "ron" ) ;
+
+  printf( "\n" ) ;
 
 } // :: test_string_events
 
