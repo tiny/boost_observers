@@ -12,7 +12,7 @@
 #ifndef NUMERICS_H
 #define NUMERICS_H
 
-#include "boost/observables/subject.hpp"
+#include "boost/observe/subject.hpp"
 
 /*!
   @class Numeric< T >::DivByZero
@@ -31,7 +31,7 @@ template <class T>
 class Numeric 
 {
   protected :
-    std::atomic<T>                   _x ;
+    std::atomic<T>      _x ;
     Subject             _valueCB ;
 
   public    :

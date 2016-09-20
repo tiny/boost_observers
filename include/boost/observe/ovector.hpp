@@ -11,7 +11,7 @@
 */
 #pragma once
 
-#include <boost/observables/subject.hpp>
+#include <boost/observe/subject.hpp>
 #include <vector>
 
 namespace boost { namespace observables {
@@ -23,7 +23,9 @@ class oVector : public std::vector< _Value >
     typedef std::vector< _Value >     _Parent;
     typedef oVector< _Value, _Gate >  _TGOVector;
 
+#ifdef BOOST_HAS_THREADS
     _Gate          _gate;
+#endif
     iterator       _current;
     Subject        _postInsertCB;
     Subject        _preEraseCB;
@@ -39,7 +41,9 @@ class oVector : public std::vector< _Value >
                    : _postInsertCB( this ), _preEraseCB( this )
                    {
                      _TGOVector &other = const_cast<_TGOVector &>(_X);
+#ifdef BOOST_HAS_THREADS
                      lock_guard<_Gate>  sc( other._gate ) ;
+#endif
                      insert( begin(), other.begin(), other.end() );
                    }
     virtual       ~oVector() {}
@@ -47,8 +51,10 @@ class oVector : public std::vector< _Value >
     _TGOVector    &operator=( const _TGOVector &cother_ ) 
                    {
                      _TGOVector &other = const_cast<_TGOVector &>(cother_);
+#ifdef BOOST_HAS_THREADS
                      lock_guard<_Gate>  sc1( other._gate ) ;
                      lock_guard<_Gate>  sc2( _gate ) ;
+#endif
                      for( _current = begin(); _current != end(); _current++ ) 
                      {
                        _preEraseCB.invoke({ _current, this });
@@ -63,24 +69,32 @@ class oVector : public std::vector< _Value >
                    }
     void           reserve(size_type _N) 
                    {
+#ifdef BOOST_HAS_THREADS
                      lock_guard<_Gate>  sc( _gate ) ;
+#endif
                      _Parent::reserve( _N );
                    }
     void           resize(size_type _N, _Value x = T() )
                    {
+#ifdef BOOST_HAS_THREADS
                      lock_guard<_Gate>  sc( _gate ) ;
+#endif
                      _Parent::resize( _N, x );
                    }
     void           push_back(const _Value& _X)
                    {
+#ifdef BOOST_HAS_THREADS
                      lock_guard<_Gate>  sc( _gate ) ;
+#endif
                      _Parent::push_back( _X );
                      _current = (end() - 1);    
                      _postInsertCB.invoke({ _current, this });
                    }
     void           pop_back()
                    {
+#ifdef BOOST_HAS_THREADS
                      lock_guard<_Gate>  sc( _gate ) ;
+#endif
                      if( size() < 1 ) 
                      {
                        return;
@@ -91,17 +105,23 @@ class oVector : public std::vector< _Value >
                    }
     void           assign( iterator _F, iterator _L )
                    {
+#ifdef BOOST_HAS_THREADS
                      lock_guard<_Gate>  sc( _gate ) ;
+#endif
                      _Parent::assign( _F, _L );
                    }
     void           assign(size_type _N, const _Value& _X = _Value() )
                    {
+#ifdef BOOST_HAS_THREADS
                      lock_guard<_Gate>  sc( _gate ) ;
+#endif
                      _Parent::assign( _N, _X );
                    }
     iterator       insert(iterator _P, size_type n, const _Value& _X = _Value() )
                    {
+#ifdef BOOST_HAS_THREADS
                      lock_guard<_Gate>  sc( _gate ) ;
+#endif
                      _current = _Parent::insert( _P, n, _X );
                      if( end() != _current ) 
                      {
@@ -111,7 +131,9 @@ class oVector : public std::vector< _Value >
                    }
     void           insert(iterator _P, iterator _F, iterator _L)
                    {
+#ifdef BOOST_HAS_THREADS
                      lock_guard<_Gate>  sc( _gate ) ;
+#endif
                      if( _F == _L ) 
                      {
                        return;
@@ -126,7 +148,9 @@ class oVector : public std::vector< _Value >
 
     iterator       erase(iterator _P)
                    {
+#ifdef BOOST_HAS_THREADS
                      lock_guard<_Gate>  sc( _gate ) ;
+#endif
                      if( end() != _P ) 
                      {
                        _current = _P;
@@ -136,7 +160,9 @@ class oVector : public std::vector< _Value >
                    }
     iterator       erase(iterator _F, iterator _L)
                    {
+#ifdef BOOST_HAS_THREADS
                      lock_guard<_Gate>  sc( _gate ) ;
+#endif
                      for( _current = _F; _current != _L; _current++ ) 
                      {
                        _preEraseCB.invoke({ _current, this });
@@ -145,7 +171,9 @@ class oVector : public std::vector< _Value >
                    }
     void           clear()
                    {
+#ifdef BOOST_HAS_THREADS
                      lock_guard<_Gate>  sc( _gate ) ;
+#endif
                      for( _current = begin(); _current != end(); _current++ ) 
                      {
                        _preEraseCB.invoke({ _current, this });
@@ -154,7 +182,9 @@ class oVector : public std::vector< _Value >
                    }
 
     // access methods
+#ifdef BOOST_HAS_THREADS
     _Gate         &gate() { return( _gate ); }
+#endif
     Subject       &postInsertCB() { return( _postInsertCB ); }
     Subject       &preEraseCB() { return( _preEraseCB ); }
     iterator      &current() { return( _current ); }

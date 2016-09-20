@@ -14,7 +14,7 @@
 #include <boost/thread.hpp>
 #include <iostream>
 #include <set>
-#include "boost/observables/numerics.hpp"
+#include "boost/observe/numerics.hpp"
 #include <boost/timer/timer.hpp>
 
 using namespace boost ;

@@ -11,7 +11,7 @@
 */
 #pragma once
 
-#include "boost/observables/subject.hpp"
+#include "boost/observe/subject.hpp"
 #include <map>
 
 namespace boost { namespace observables {
@@ -24,7 +24,9 @@ class EventMap
     typedef typename std::map< T, Subject >::iterator    _EventMap_iter ;
     typedef typename std::map< T, Subject >::value_type  _EventMap_pair ;
 
+#ifdef BOOST_HAS_THREADS
     LockFreeMutex             _lock ;
+#endif
     _EventMap                 _events ;
     Subject                   _default ;
 
@@ -34,13 +36,17 @@ class EventMap
     Subject                  &get_default() { return _default ; }
     Subject                  *find( const T &evt_id ) 
                               {
+#ifdef BOOST_HAS_THREADS
                                 lock_guard<LockFreeMutex>  sc( _lock ) ;
+#endif
                                 _EventMap_iter  it = _events.find( evt_id ) ;
                                 return (it == _events.end()) ? nullptr : &(*it).second ;
                               }
     Subject                  &get( const T &evt_id ) 
                               {
+#ifdef BOOST_HAS_THREADS
                                 lock_guard<LockFreeMutex>  sc( _lock ) ;
+#endif
                                 _EventMap_iter  it = _events.find( evt_id ) ;
                                 if (it == _events.end())
                                 {
@@ -51,14 +57,18 @@ class EventMap
                               }
     void                      invoke( const T &evt_id ) 
                               {
+#ifdef BOOST_HAS_THREADS
                                 lock_guard<LockFreeMutex>  sc( _lock ) ;
+#endif
                                 Subject *s = find( evt_id ) ;
                                 if (s)  s->invoke({evt_id}) ;
                                 else _default.invoke({evt_id}) ;
                               }
     void                      invoke( const T &evt_id, const std::vector<boost::any> &args_ ) 
                               {
+#ifdef BOOST_HAS_THREADS
                                 lock_guard<LockFreeMutex>  sc( _lock ) ;
+#endif
                                 Subject *s = find( evt_id ) ;
 
                                 std::vector<boost::any> args = {evt_id} ;

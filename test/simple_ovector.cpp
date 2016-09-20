@@ -10,7 +10,7 @@
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 */
 #include <stdio.h>
-#include "boost/observables/ovector.hpp"
+#include "boost/observe/ovector.hpp"
 
 //-----------------------------------------------------------------------------
 //

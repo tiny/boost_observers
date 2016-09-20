@@ -14,8 +14,8 @@
 #include <stdint.h>
 #include <atomic>
 #include <boost/thread/lock_guard.hpp>
-#include "boost/observers/observer.hpp"
-#include "boost/observables/lfmutex.hpp"
+#include "boost/observe/observer.hpp"
+#include "boost/observe/lfmutex.hpp"
 
 namespace boost { namespace observables {
 
@@ -26,7 +26,9 @@ class Subject
       bool                             _invoked ;      // true when blocked, then tripped by invoke
       bool                             _is_dead ;      // useful for globals that go out of scope(protection mechanism)
       void                            *_src ;          // who was the originator of the msgs
+#ifdef BOOST_HAS_THREADS
       LockFreeMutex                    _lock ;
+#endif
       boost::observers::ObserverVec    _vec ;
 
     public   :
@@ -54,7 +56,9 @@ class Subject
       void               block() { _block++ ; } // disables Observer
       void               clear() 
                          {
+#ifdef BOOST_HAS_THREADS
                            lock_guard<LockFreeMutex>  sc( _lock ) ;
+#endif
                            boost::observers::ObserverVec_iter  it ;
                            for (it = _vec.begin(); it != _vec.end(); it++)
                            {
@@ -67,7 +71,9 @@ class Subject
                            if (c == nullptr)
                              return c ;
 
+#ifdef BOOST_HAS_THREADS
                            lock_guard<LockFreeMutex>  sc( _lock ) ;
+#endif
                            _vec.push_back( c ) ;
 
                            return c ;
@@ -80,8 +86,9 @@ class Subject
                               return ;
                             }
 
+#ifdef BOOST_HAS_THREADS
                             lock_guard<LockFreeMutex>  sc( _lock ) ;
-
+#endif
                             // locked... do some work
                             boost::observers::ObserverVec_iter  it ;
                             for (it = _vec.begin(); it != _vec.end(); it++)
@@ -98,8 +105,9 @@ class Subject
                               _invoked = true ;
                               return ;
                             }
+#ifdef BOOST_HAS_THREADS
                             lock_guard<LockFreeMutex>  sc( _lock ) ;
-
+#endif
                             // locked... do some work
                             boost::observers::ObserverVec_iter  it ;
                             for (it = _vec.begin(); it != _vec.end(); it++)
@@ -114,8 +122,9 @@ class Subject
                             if (cb == nullptr)
                               return cb ;
 
+#ifdef BOOST_HAS_THREADS
                             lock_guard<LockFreeMutex>  sc( _lock ) ;
-
+#endif
                             // locked... do some work
                             boost::observers::ObserverVec_iter  it ;
                             for (it = _vec.begin(); it != _vec.end(); it++)

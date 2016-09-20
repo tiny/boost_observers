@@ -47,6 +47,7 @@ class LockFreeMutex
 
     void                 lock() 
                          {
+#ifdef BOOST_HAS_THREADS
                            uint32_t  tid  = get_thread_id() ; 
                            uint32_t  zero = 0 ;
 
@@ -58,15 +59,18 @@ class LockFreeMutex
                              zero = 0 ;
                            }
                            _cnt++ ;
+#endif
                          }
     void                 unlock() 
                          {
+#ifdef BOOST_HAS_THREADS
                            _cnt-- ;
                            if (_cnt <= 0)
 #if BOOST_OS_LINUX
                              _lock.store( 0 ) ;
 #else
                              std::atomic_store( &_lock, 0 ) ;
+#endif
 #endif
                          }
 } ; // class LockFreeMutex

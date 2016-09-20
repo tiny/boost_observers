@@ -10,7 +10,7 @@
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 */
 #include <stdio.h>
-#include "boost/observables/eventmap.hpp"
+#include "boost/observe/eventmap.hpp"
 #include <boost/any.hpp>
 #include <vector> 
 

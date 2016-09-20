@@ -11,7 +11,7 @@
 */
 #pragma once
 
-#include <boost/observables/subject.hpp>
+#include <boost/observe/subject.hpp>
 #include <map>
 
 namespace boost { namespace observables {
@@ -24,7 +24,9 @@ class oMap : public std::map< Key, Value, _Pr >
     typedef typename oMap< Key, Value, _Pr >::value_type gomap_pair ;
     Subject             _preEraseCB;
     Subject             _postInsertCB;
+#ifdef BOOST_HAS_THREADS
     LockFreeMutex       _gate;
+#endif
     gomap_iter          _current;
 
   public:
@@ -40,8 +42,10 @@ class oMap : public std::map< Key, Value, _Pr >
                         {}
   oMap                &operator=( const oMap &rhs_ ) 
                         { oMap &other = const_cast<oMap&>(rhs_);
+#ifdef BOOST_HAS_THREADS
                           lock_guard<LockFreeMutex>  sc1( other._gate ) ;
                           lock_guard<LockFreeMutex>  sc2( _gate ) ;
+#endif
                           clear();
                           typename std::<Key,Value>::const_iterator  iter ;
                           for (iter = rhs_.begin(); iter != rhs_.end(); iter++)
@@ -55,8 +59,9 @@ class oMap : public std::map< Key, Value, _Pr >
   
   std::pair<gomap_iter, bool>  update(const gomap_pair &obj)
                         {
+#ifdef BOOST_HAS_THREADS
                           lock_guard<LockFreeMutex>  sc( _gate ) ;
-
+#endif
                           _current = find(obj.first);
                           // if not already in the map, then only insert
                           if( end() == _current ) 
@@ -82,7 +87,9 @@ class oMap : public std::map< Key, Value, _Pr >
   
   std::pair<gomap_iter, bool>  insert(const gomap_pair& obj)
                         {
+#ifdef BOOST_HAS_THREADS
                           lock_guard<LockFreeMutex>  sc( _gate ) ;
+#endif
                           std::pair<gomap_iter, bool> insert_result = std::map<Key,Value>::insert(obj);
                           _current = insert_result.first;
                           if( insert_result.second ) 
@@ -94,7 +101,9 @@ class oMap : public std::map< Key, Value, _Pr >
 
   std::pair<gomap_iter, bool>  insert( gomap_iter pos, const gomap_pair& obj)
                         {
+#ifdef BOOST_HAS_THREADS
                           lock_guard<LockFreeMutex>  sc( _gate ) ;
+#endif
                           std::pair<gomap_iter, bool> insert_result = std::map<Key,Value>::insert(pos,obj);
                           _current = insert_result.first;
                           if( insert_result.second ) 
@@ -106,7 +115,9 @@ class oMap : public std::map< Key, Value, _Pr >
 
   size_t                erase(const Key & key) 
                         {
+#ifdef BOOST_HAS_THREADS
                           lock_guard<LockFreeMutex>  sc( _gate ) ;
+#endif
                           _current = find(key);
                           if( end() == _current )
                           { 
@@ -119,7 +130,9 @@ class oMap : public std::map< Key, Value, _Pr >
 
   void                  erase(gomap_iter it)
                         {
+#ifdef BOOST_HAS_THREADS
                           lock_guard<LockFreeMutex>  sc( _gate ) ;
+#endif
                           if( end() == it )
                           { 
                             return; 
@@ -131,7 +144,9 @@ class oMap : public std::map< Key, Value, _Pr >
 
   void                  erase(gomap_iter f, gomap_iter l)
                         {
+#ifdef BOOST_HAS_THREADS
                           lock_guard<LockFreeMutex>  sc( _gate ) ;
+#endif
                           for( _current = f; _current != l; _current++ )
                           {
                             _preEraseCB.invoke({ _current, this }) ;
